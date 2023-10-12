@@ -1,0 +1,31 @@
+name: penghijauan
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 * * * *'
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.10"
+    - name: update or create README.md
+      run: |
+        python green.py
+    - name: commit and push
+      run: |
+        greens=("🌲" "🌳" "🌴" "🎄" "💚")
+        git config user.name "${GITHUB_ACTOR}"
+        git config user.email "62317096+thansetan@users.noreply.github.com"
+        git commit -am "penghijauan ${greens[$RANDOM % ${#greens[@]}]}"
+        git push
