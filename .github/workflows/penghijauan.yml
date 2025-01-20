@@ -16,8 +16,13 @@ jobs:
     - uses: actions/checkout@v4
     - name: commit and push
       run: |
-        greens=("🌲" "🌳" "🌴" "🎄" "💚")
-        git config user.name "${GITHUB_ACTOR}"
-        git config user.email "62317096+thansetan@users.noreply.github.com"
-        git commit --allow-empty -m "penghijauan ${greens[$RANDOM % ${#greens[@]}]}" -m "🕰️ Updated on `TZ=Asia/Jakarta date +'%A, %d %B %Y at %H:%M %Z'`"
-        git push
+        if (($RANDOM % 2)); then
+          greens=("🌲" "🌳" "🌴" "🎄" "💚")
+          git config user.name "${GITHUB_ACTOR}"
+          git config user.email "62317096+thansetan@users.noreply.github.com"
+          git commit --allow-empty -m "penghijauan ${greens[$RANDOM % ${#greens[@]}]}" -m "🕰️ Updated on `TZ=Asia/Jakarta date +'%A, %d %B %Y at %H:%M %Z'`"
+          git push
+          echo "commit created"
+        else
+          echo "skipped"
+        fi
